@@ -59,7 +59,6 @@ EM.note = {
 			jQuery(element).on('keyup change', function () {
 				ready = _note.requiredFields.every(function (element) {
 					var pattern = new RegExp(jQuery(element).attr('pattern'), 'im');
-					// console.debug(element, pattern, pattern.test(element.value));
 					return pattern.test(element.value);
 				});
 				_note.saveNote.prop('disabled', !ready);
@@ -67,7 +66,8 @@ EM.note = {
 		});
 
 		_note.saveNote.click(function () {
-			if (!jQuery('#' + _note.noteName.val() + '')) {
+			console.debug(document.getElementById(_note.noteName.val()));
+			if (!document.getElementById(_note.noteName.val())) {
 				window.localStorage.setItem(_note.noteName.val(), _note.textarea.val());
 				_note.notesList.append(
 					'<div class="form-group">' 																						+

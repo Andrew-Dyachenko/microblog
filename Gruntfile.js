@@ -34,31 +34,6 @@ module.exports = function(grunt) {
             }
         },
 
-        sprite:{
-            all: {
-                src: 'assets/images/sprite/*.{png, jpg, gif, bnp}',
-                dest: 'dist/images/sprite/sprite.png',
-                cssFormat: 'css',
-                destCss: 'dist/css/sprite.css',
-                cssOpts: {
-                    cssSelector: function (item) {
-                        if (item.name.indexOf('-hover') !== -1) {
-                            return '.spriteSmith:hover .icon-' + item.name.replace('-hover', '');
-                        }
-                        else if (item.name.indexOf('-active') !== -1) {
-                            return '.spriteSmith:active .icon-' + item.name.replace('-active', '') + ',' + '\n' + '.spriteSmith.active .icon-' + item.name.replace('-active', '');
-                        }
-                        else if (item.name.indexOf('-focus') !== -1) {
-                            return '.spriteSmith:focus .icon-' + item.name.replace('-focus', '');
-                        }
-                        else {
-                            return '.spriteSmith .icon-' + item.name;
-                        }
-                    }
-                }
-            }
-        },
-
         less: {
             production: {
                 options: {
@@ -125,7 +100,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: 'assets/',
-                        src: ['images/**', '!images/sprite/**'],
+                        src: ['images/**'],
                         dest: 'dist/',
                     }
                 ]
@@ -176,15 +151,11 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['assets/less/*.less', '!assets/less/variables.less'],
-                tasks: ['less', 'postcss', 'concat', 'cssmin', 'usebanner:css']
+                tasks: ['less', 'postcss', 'cssmin', 'usebanner:css']
             },
             js: {
                 files: '<%= jshint.files %>',
                 tasks: ['jshint', 'uglify', 'copy:js', 'usebanner:js']
-            },
-            sprite: {
-                files: ['assets/images/sprite/**'],
-                tasks: ['sprite', 'less', 'postcss', 'concat', 'cssmin', 'usebanner:css']
             },
             images: {
                 files: ['assets/images/*'],
@@ -193,16 +164,6 @@ module.exports = function(grunt) {
             fonts: {
                 files: ['assets/fonts/**'],
                 tasks: ['copy:fonts']
-            }
-        },
-
-        concat: {
-            options: {
-                separator: '\n'
-            },
-            sprite: {
-                src: ['dist/css/sprite.css', 'dist/css/common.css'],
-                dest: 'dist/css/common.css'
             }
         },
 
@@ -255,10 +216,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-rename');
     grunt.loadNpmTasks('grunt-symbolic-link');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-spritesmith');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.registerTask('newerCopy', ['newer:copy']);
-    grunt.registerTask('default', ['clean', 'jshint', 'uglify', 'sprite', 'symlink:mixins', 'less', 'postcss', 'concat', 'cssmin', 'newerCopy', 'rename', 'symlink:makeLink', 'usebanner', 'watch']);
+    grunt.registerTask('default', ['clean', 'jshint', 'uglify', 'symlink:mixins', 'less', 'postcss', 'cssmin', 'newerCopy', 'rename', 'symlink:makeLink', 'usebanner', 'watch']);
 };
