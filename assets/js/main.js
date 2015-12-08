@@ -66,7 +66,6 @@ EM.note = {
 		});
 
 		_note.saveNote.click(function () {
-			console.debug(document.getElementById(_note.noteName.val()));
 			if (!document.getElementById(_note.noteName.val())) {
 				window.localStorage.setItem(_note.noteName.val(), _note.textarea.val());
 				_note.notesList.append(
@@ -90,6 +89,11 @@ EM.note = {
 					_note.noteName.val(e.target.value);
 					_note.textarea.val(val);
 					_note.noteName.focus();
+				});
+				
+				jQuery('#' + _note.noteName.val()).parent().find('.removeNote').click(function () {
+					window.localStorage.removeItem(jQuery(this).parent().find('input:radio').attr('value'));
+					jQuery(this).parent().remove();
 				});
 				/*------------------------------*/
 			}

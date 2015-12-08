@@ -6,7 +6,7 @@
 		<fieldset class="noteName">
 			<legend>Имя заметки:</legend>
 			<div class="inputWrapper">
-				<input type="text" id="noteName" maxlength="70" autofocus pattern="[\s\S]{1,70}" required title="Название заметки должно состоять из одной или более букв">
+				<input type="text" id="noteName" maxlength="70" autofocus pattern="^[A-Za-zА-Яа-я0-9_]{1,70}$" required title="Название заметки должно состоять из одной или более символов [A-Za-zА-Яа-я0-9_]. Не разрешается использовать пробельные символы.">
 			</div>
 		</fieldset>
 		<fieldset class="noteText">
