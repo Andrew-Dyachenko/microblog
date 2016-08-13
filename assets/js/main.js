@@ -1,12 +1,12 @@
-if (!EM) var EM = {}; // Embria microblog
+if (!MB) var MB = {}; // Microblog
 
-EM.init = function() {
+MB.init = function() {
 	this.popUp.init();
 	this.firstVisit.init();
 	this.myCookies.init();
 	this.note.init();
 };
-EM.note = {
+MB.note = {
 	init: function(){
 		if (this.supports_html5_storage()) {
 			this.self = jQuery('#notes');
@@ -34,20 +34,22 @@ EM.note = {
 		}
 	},
 	buildList: function () {
-		var _note = this,
-			i;
-		for (i in window.localStorage) {
-			_note.notesList.append(
-				'<div class="form-group">' 															+
-					'<input type="radio" name="note" id="' + i + '" value="' + i + '"/>' 			+
-					'<label for="' + i + '">'														+
-						'' + i + ''																	+
-					'</label>'																		+
-					'<button class="removeNote">'													+
-						'<span class="glyphicon glyphicon-trash"></span>'							+
-					'</button>'																		+
-				'</div>'														
-			);
+		if (window.localStorage.length) {
+			var keys = Object.keys(window.localStorage),
+				i;
+			for (i = 0; i < keys.length; i++) {
+				this.notesList.append(
+					'<div class="form-group">' 															+
+						'<input type="radio" name="note" id="' + keys[i] + '" value="' + keys[i] + '"/>'+
+						'<label for="' + keys[i] + '">'													+
+							'' + keys[i] + ''															+
+						'</label>'																		+
+						'<button class="removeNote">'													+
+							'<span class="glyphicon glyphicon-trash"></span>'							+
+						'</button>'																		+
+					'</div>'														
+				);
+			}
 		}
 		this.initListeners();
 	},
@@ -118,7 +120,7 @@ EM.note = {
 		});
 	}
 };
-EM.footerAndHead = {
+MB.footerAndHead = {
 	init: function() {
 		this.footerElements = jQuery('.footer .tagline, .footer .authorInfo');
 		this.action();
@@ -130,7 +132,7 @@ EM.footerAndHead = {
 		}, 500);
 	}
 };
-EM.myCookies = {
+MB.myCookies = {
 	init: function() {
 		var _this = this;
 		this.cookies = (function() {
@@ -160,7 +162,7 @@ EM.myCookies = {
 		this.keys = [];
 	}
 };
-EM.firstVisit = {
+MB.firstVisit = {
 	init: function() {
 		this.test = jQuery.cookie('firstVisit');
 		this.self = jQuery('.popUp .welcome');
@@ -173,13 +175,13 @@ EM.firstVisit = {
 			jQuery('.head, .footer').css({
 				display: 'none'
 			});
-			EM.popUp._show('welcome');
+			MB.popUp._show('welcome');
 			setTimeout(function(){
-				EM.footerAndHead.init();
+				MB.footerAndHead.init();
 			}, 500);
 		}
 		else {
-			EM.footerAndHead.init();
+			MB.footerAndHead.init();
 			jQuery('.head, .footer').removeClass('out').addClass('in');
 			setTimeout(function(){
 				jQuery('.notes').fadeIn('slow');
@@ -190,11 +192,11 @@ EM.firstVisit = {
 	initListeners: function() {
 		var _this = this;
 		this.button.click(function(){
-			EM.popUp._hide();
+			MB.popUp._hide();
 		});
 	}
 };
-EM.popUp = {
+MB.popUp = {
 	init: function () {
 		this.self = jQuery('.popUp');
 		this.wrapper = jQuery('.popUpWrapper');
@@ -212,7 +214,7 @@ EM.popUp = {
         this.layers = {};
         this.layers.welcome = jQuery('.popUp .welcome');
         this.layers.aboutAuthor = jQuery('.popUp .aboutAuthor');
-        this.layers.embriaTask = jQuery('.popUp .embriaTask');
+        this.layers.task = jQuery('.popUp .task');
         this.myScroll.mCustomScrollbar();
     },
 	initListeners: function(){
@@ -315,5 +317,5 @@ EM.popUp = {
     }
 };
 jQuery(document).ready(function() {
-    EM.init();
+    MB.init();
 });

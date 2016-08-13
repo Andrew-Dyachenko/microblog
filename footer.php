@@ -8,16 +8,16 @@
 						Автор:
 					</div>
 					<div class="value">
-						<a href="#" onclick="javascript: void EM.popUp._show('aboutAuthor');">Дьяченко Андрей</a>
+						<a href="#" onclick="javascript: void MB.popUp._show('aboutAuthor');">Дьяченко Андрей</a>
 					</div>
 				</div>
 			</div>
 			<div class="tagline">
 				Тестовое
-				<a href="#" onclick="javascript: void EM.popUp._show('embriaTask');">
+				<a href="#" onclick="javascript: void MB.popUp._show('task');">
 					задание
 				</a>
-				предоставленно компанией Embria &#8482;
+				предоставленно компанией Magora-systems &#8482;
 			</div>
 		</div>
 	</div>
@@ -36,18 +36,18 @@
 							Приветствую вас!
 						</h3>
 						<p>
-							Спасибо что посетили страницу моего тестового микроблога. Данная страница выполнена как тестовое задание по поручению компании <em>"Embria"</em>. Я старался сделать ее красивой и интересной.
+							Спасибо что посетили страницу моего тестового микроблога. Данная страница выполнена как тестовое задание по поручению компании <em>"Magora-systems"</em>. Я старался сделать ее красивой и интересной.
 						</p>
 						<button class="m-t-20">
 							Хорошо
 						</button>
 					</div>
-					<div class="embriaTask">
+					<div class="task">
 						<h3 class="title">
 							<strong>Тестовое задание</strong>
 						</h3>
 						<blockquote class="fs-16">
-							<strong><em>Наталья Лебедева:</em></strong> "Задача — создать клиент для работы с локальным микроблогом, используя JS/HTML/CSS.
+							<strong><em>Любовь Решетникова:</em></strong> "Задача — создать клиент для работы с локальным микроблогом, используя JS/HTML/CSS.
 							Клиент должен позволять просматривать ленту, добавлять в неё новые записи и удалять их.
 							Записи должны сохраняться локально, никакой серверной части писать не нужно.
 							Разрешается использовать любые фреймворки и библиотеки.
@@ -56,17 +56,21 @@
 						</blockquote>
 
 						<hr>
+						<h3 class="title">
+							<strong>Версия: 0.1.3</strong>
+						</h3>
+						<hr>
 						
 						<h3 class="title"><strong>Справочная информация:</strong></h3>
-						<h4>Выполенное тестовое задание для компании «Embria»</h3>
-						<p>Данное тестовое задание выполнено по поручению компании «Embria», на позицию: Front end разработчика, HTML верстальщика.</p>
+						<h4>Выполенное тестовое задание для компании «Magora-systems»</h3>
+						<p>Данное тестовое задание выполнено по поручению компании «Magora-systems», на позицию: Front end разработчика, HTML верстальщика.</p>
 						<h5><strong>Репозиторий:</strong></h5>
 						<p>Репозиторием выступает Bitbucket.</p>
 						<p>
-							<kbd><a href="git@bitbucket.org:Andrew_Dyachenko/embria-microblog.git">git@bitbucket.org:Andrew_Dyachenko/embria-microblog.git</a></kbd>
+							<kbd><a href="git@bitbucket.org:Andrew_Dyachenko/microblog.git">git@bitbucket.org:Andrew_Dyachenko/microblog.git</a></kbd>
 						</p>
 						<h5><strong>Результат работы:</strong></h5>
-						<p>Выполненный результат тестового задания можно увидеть по адресу <a href="http://embria.esy.es/" title="Результат проделанного тестового задания для компании «Embria»">http://embria.esy.es/</a></p>
+						<p>Выполненный результат тестового задания можно увидеть по адресу <a href="http://microblog.esy.es/" title="Результат проделанного тестового задания для компании «Magora-systems»">http://microblog.esy.es/</a></p>
 						<h5><strong>Установка:</strong></h5>
 						<p>Что бы установить проект на свой компьютер - откройте консоль и перейдите в папку где обычно храняться ваши WEB проекты:</p>
 						<p>
@@ -74,12 +78,15 @@
 						</p>
 						<p>Скопируйте проект на локальный компьютер:</p>
 						<p>
-							<kbd>git clone git@bitbucket.org:Andrew_Dyachenko/embria-microblog.git</kbd>
+							<kbd>git clone git@bitbucket.org:Andrew_Dyachenko/microblog.git</kbd>
 						</p>
 						<p>Разверните проект - выполните поочередно, в командной строке следующие команды:</p>
 						<p><kbd>npm install</kbd> (Для Unix пользователей, может потребоватся команда <kbd>sudo</kbd>).</p>
 						<p>
 							<kbd>bower install</kbd>
+						</p>
+						<p>
+							<kbd>grunt deploy</kbd>
 						</p>
 						<p>
 							<kbd>grunt</kbd>
@@ -159,7 +166,7 @@
 								</div>
 								<div class="value" id="age"></div>
 								<script>
-									jQuery('#age').html(new Date().getFullYear() - 1988);
+									jQuery('#age').html(((new Date().getTime() - new Date('1988-12-04')) / (24 * 3600 * 365.25 * 1000)) | 0);
 								</script>
 							</div>
 							<div class="item">
@@ -183,7 +190,7 @@
 									<span>Проф. Цели:</span>
 								</div>
 								<div class="value">
-									<small><i>Научится применять AngularJS, ReactJS</i></small>
+									<small><i>Научится применять AngularJS, ReactJS, BEM</i></small>
 								</div>
 							</div>
 						</div>

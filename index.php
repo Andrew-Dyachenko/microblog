@@ -6,13 +6,13 @@
 		<fieldset class="noteName">
 			<legend>Имя заметки:</legend>
 			<div class="inputWrapper">
-				<input type="text" id="noteName" maxlength="70" autofocus pattern="^[A-Za-zА-Яа-я0-9_]{1,70}$" required title="Название заметки должно состоять из одной или более символов [A-Za-zА-Яа-я0-9_]. Не разрешается использовать пробельные символы.">
+				<input type="text" id="noteName" maxlength="70" autofocus pattern="^[A-Za-zА-Яа-я0-9_]{1,70}$" required placeholder="Введите имя заметки" title="Название заметки должно состоять из одной или более символов [A-Za-zА-Яа-я0-9_]. Не разрешается использовать пробельные символы.">
 			</div>
 		</fieldset>
 		<fieldset class="noteText">
 			<legend>Текст заметки:</legend>
 			<div class="textareaWrapper">
-				<textarea name="addNote" id="noteText" rows="4" pattern=".+?(?:[\s'].+?){2,}" maxlength="255" required title="Заметка должна содержать хотя бы три фразы"></textarea>
+				<textarea name="addNote" id="noteText" rows="4" pattern=".+?(?:[\s'].+?){2,}" maxlength="255" required placeholder="Введите как минимум три фразы" title="Заметка должна содержать хотя бы три фразы"></textarea>
 			</div>
 		</fieldset>
 		<button id="saveNote" disabled>

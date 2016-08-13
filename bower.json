@@ -1,20 +1,19 @@
 {
-  "name": "embria-microblog",
-  "version": "0.0.1",
-  "description": "Embria microblog (local)",
+  "name": "microblog",
+  "version": "0.1.3",
+  "description": "Microblog (local)",
   "main": "index.php",
   "moduleType": [
     "globals"
   ],
   "keywords": [
-    "Embria",
     "Microblog"
   ],
   "authors": [
     "Andrew_Dyachenko"
   ],
   "license": "MIT",
-  "homepage": "embria-microblog.esy.es",
+  "homepage": "microblog.esy.es",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -24,11 +23,11 @@
   ],
   "dependencies": {
     "jquery": "jQuery#^1",
-    "jquery-migrate": "~1.2.1",
-    "jquery-ui": "~1.11.4",
-    "jquery.cookie": "jquery-cookie#~1.4.1",
-    "jquery-mousewheel": "~3.1.13",
-    "malihu-custom-scrollbar-plugin": "~3.1.3",
-    "bootstrap": "~3.3.6"
+    "jquery-migrate": "#1.2.1",
+    "jquery-ui": "#1.11.4",
+    "jquery.cookie": "jquery-cookie#1.4.1",
+    "jquery-mousewheel": "#3.1.13",
+    "malihu-custom-scrollbar-plugin": "#3.1.3",
+    "bootstrap": "#3.3.6"
   }
 }

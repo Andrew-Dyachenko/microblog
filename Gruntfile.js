@@ -1,29 +1,71 @@
-var bannerInfo = '                                                              \n' +
-    '/*                                                                         \n' +
-    '|------------------------------------------------------------------------- \n' +
-    '| Created info                                                             \n' +
-    '|------------------------------------------------------------------------- \n' +
-    '|                                                                          \n' +
-    '| Developer: Andrew Dyachenko                                              \n' +
-    '| Date:      ' + Date() + '                                                \n' +
-    '| Email:     cccp.world@gmail.com                                          \n' +
-    '| Skype:     tux_will                                                      \n' +
-    '| Phone:     +7(923)337-34-58                                              \n' +
-    '|                                                                          \n' +
-    '|--------------------------- Special for «Embria» ------------------------ \n' +
-    '|                                                                          \n' +
-    '*/                                                                         \n' ;
 var path = require('path');
 module.exports = function(grunt) {
+    grunt.config.init({
+        bannerInfo: '                                                               \n' +
+        '/*                                                                         \n' +
+        '|------------------------------------------------------------------------- \n' +
+        '| Created info                                                             \n' +
+        '|------------------------------------------------------------------------- \n' +
+        '|                                                                          \n' +
+        '| Developer: Andrew Dyachenko                                              \n' +
+        '| Date:      8 января 2015                                                 \n' +
+        '| Email:     cccp.world@gmail.com                                          \n' +
+        '| Skype:     tux_will                                                      \n' +
+        '| Phone:     +7(923) 337-34-58                                             \n' +
+        '|                                                                          \n' +
+        '|------------------------------- «Microblog» ----------------------------- \n' +
+        '|                                                                          \n' +
+        '*/                                                                         \n',
 
-    grunt.initConfig({
+        realFavicon: {
+            favicons: {
+                src: 'assets/images/master-favicon.png',
+                dest: 'favicon/',
+                options: {
+                    iconsPath: 'favicon/',
+                    html: [ 'favicon.php' ],
+                    design: {
+                        ios: {
+                            pictureAspect: 'backgroundAndMargin',
+                            backgroundColor: '#ffffff',
+                            margin: '28%'
+                        },
+                        desktopBrowser: {},
+                        windows: {
+                            pictureAspect: 'noChange',
+                            backgroundColor: '#ffc40d',
+                            onConflict: 'override'
+                        },
+                        androidChrome: {
+                            pictureAspect: 'noChange',
+                            themeColor: '#3c3c3c',
+                            manifest: {
+                                name: 'Grocery market',
+                                display: 'browser',
+                                orientation: 'notSet',
+                                onConflict: 'override',
+                                declared: true
+                            }
+                        },
+                        safariPinnedTab: {
+                            pictureAspect: 'silhouette',
+                            themeColor: '#5bbad5'
+                        }
+                    },
+                    settings: {
+                        scalingAlgorithm: 'Mitchell',
+                        errorOnImageTooSmall: false
+                    }
+                }
+            }
+        },
 
         jshint: {
             files: ['assets/js/*.js', 'js/main.js']
         },
 
         uglify: {
-            minified: {
+            dist: {
                 files: [{
                     expand: true,
                     cwd: 'assets/js/',
@@ -37,21 +79,20 @@ module.exports = function(grunt) {
         less: {
             production: {
                 options: {
+                    strictMath: true,
                     sourceMap: true,
-                    paths: ['dist/css'],
-                    compress: false,
-                    plugins: [
-                        require('less-plugin-glob')
-                    ]
+                    outputSourceFiles: true,
+                    sourceMapURL: 'common.css.map',
+                    sourceMapFilename: 'dist/css/common.css.map'
                 },
-                files: {
-                    'dist/css/common.css': ['assets/less/common.less', '!assets/less/variables.less']
-                }
+                src: ['assets/less/common.less'],
+                dest: 'dist/css/common.css'
             }
         },
 
         postcss: {
             options: {
+                map: true,
                 processors: [
                     require('autoprefixer')({
                         browsers: [
@@ -68,7 +109,7 @@ module.exports = function(grunt) {
                 ]
             },
             dist: {
-                src: ['dist/css/*.css', '!dist/css/*.min.css']
+                src: ['dist/css/*.css', '!dist/css/*.min.css', '!/dist/css/*.css.map']
             }
         },
 
@@ -77,10 +118,17 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'dist/css/',
-                    src: ['*.css', '!*.min.css'],
+                    src: ['*.css', '!*.min.css', '!*.css.map'],
                     dest: 'dist/css',
                     ext: '.min.css'
                 }]
+            },
+            options: {
+                // TODO: disable `zeroUnits` optimization once clean-css 3.2 is released and then simplify the fix for https://github.com/twbs/bootstrap/issues/14837 accordingly
+                compatibility: 'ie8',
+                keepSpecialComments: '*',
+                sourceMap: true,
+                advanced: false
             }
         },
 
@@ -114,16 +162,16 @@ module.exports = function(grunt) {
                         dest: 'dist/js/'
                     }
                 ]
-            }
-        },
-
-        rename: {
-            main: {
+            },
+            bootstrapVariables: {
                 files: [
                     {
-                        src: 'bower_components/bootstrap/less/variables.less', 
-                        dest: 'bower_components/bootstrap/less/variables.less.bak'
-                    },
+                        expand: true,
+                        cwd: '/bower_components/bootstrap/less/',
+                        src: ['variables.less'],
+                        dest: '/bower_components/bootstrap/less/',
+                        ext: '.bak'
+                    }
                 ]
             }
         },
@@ -133,8 +181,8 @@ module.exports = function(grunt) {
                 options: {
                     overwrite: false
                 },
-                target: '' + path.resolve() + '/assets/less/variables.less',
-                link: 'bower_components/bootstrap/less/variables.less'
+                target: '' + path.resolve() + '/bower_components/bootstrap/less/variables.less',
+                link: '' + path.resolve() + '/assets/less/variables.less'
             },
             mixins: {
                 options: {
@@ -151,7 +199,7 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['assets/less/*.less', '!assets/less/variables.less'],
-                tasks: ['less', 'postcss', 'cssmin', 'usebanner:css']
+                tasks: ['less', 'postcss', 'cssmin', 'clean:minMap', 'usebanner:css']
             },
             js: {
                 files: '<%= jshint.files %>',
@@ -170,25 +218,7 @@ module.exports = function(grunt) {
         usebanner: {
             options: {
                 position: 'top',
-                banner: bannerInfo,
-                linebreak: true
-            },
-            css: {
-                files: {
-                    src: ['dist/css/**']
-                }
-            },
-            js: {
-                files: {
-                    src: ['dist/js/**']
-                }
-            }
-        },
-
-        usebanner: {
-            options: {
-                position: 'top',
-                banner: bannerInfo,
+                banner: '<%= bannerInfo %>',
                 linebreak: true
             },
             css: {
@@ -202,22 +232,27 @@ module.exports = function(grunt) {
                 }
             }
         },
-        clean: ['dist/']
+
+        clean: {
+            dist: ['dist/'],
+            minMap: ['dist/css/*.min.css.map']
+        }
     });
-    
+
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-postcss');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-symbolic-link');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-newer');
     grunt.loadNpmTasks('grunt-banner');
-    grunt.loadNpmTasks('grunt-postcss');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-rename');
-    grunt.loadNpmTasks('grunt-symbolic-link');
-    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-real-favicon');
 
     grunt.registerTask('newerCopy', ['newer:copy']);
-    grunt.registerTask('default', ['clean', 'jshint', 'uglify', 'symlink:mixins', 'less', 'postcss', 'cssmin', 'newerCopy', 'rename', 'symlink:makeLink', 'usebanner', 'watch']);
-};
+    grunt.registerTask('deploy', ['copy:bootstrapVariables', 'symlink:makeLink', 'symlink:mixins', 'realFavicon']);
+    grunt.registerTask('default', ['clean:dist', 'jshint', 'uglify', 'less', 'postcss', 'cssmin', 'clean:minMap', 'newerCopy', 'usebanner', 'watch']);
+};  
